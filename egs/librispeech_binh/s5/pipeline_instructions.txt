@@ -1,0 +1,71 @@
+In the folder egs/librispeech_binh/s5, there are many shell scripts to test the TDNN model
+
+First we go to the folder egs/librispeech_binh/s5
+
+$ cd egs/librispeech_binh/s5
+
+####################
+
+In stage 1, you download 'dev-clean', 'dev-other', 'test-clean', and 'test-other' from LibriSpeech
+This will also download the pretrained language models
+
+$ ./run_stage1_download_data.sh
+
+Then, you copy the ipynb python file
+
+$ cp sort_speakers_by_gender.ipynb export/LibriSpeech
+
+Go to the folder export/LibriSpeech and open the ipynb file, then run all cells
+
+The result will separate the male and female dataset for each set (dev-clean, dev-other, test-clean, test-other)
+
+Then, you need to create simlinks for the steps and utils folders
+
+ln -s ../../wsj/s5/steps steps
+
+ln -s ../../wsj/s5/utils utils
+
+####################
+
+In stage 2, you prepare the data for training and decoding in accordance to Kaldi file formats
+
+$ ./run_stage2_prepare_data.sh
+
+####################
+
+In stage 3, you extract the MFCC features for the decoding process
+
+$ ./run_stage3_extract_features.sh
+
+####################
+
+In stage 4, you calculate the ivectors for the decoding process
+
+$ ./run_stage4_extract_ivectors.sh
+
+####################
+
+In stage 5, you decode the testing sets for the TDNN model using the small trigram model
+
+$ ./run_stage5_decode_tgsmall.sh
+$ ./run_stage5_decode_tgsmall_male.sh
+$ ./run_stage5_decode_tgsmall_female.sh
+
+####################
+
+In stage 6, you calculate the WER for the TDNN model using the small trigram model
+
+$ ./run_stage6_WER_tgsmall.sh
+$ ./run_stage6_WER_tgsmall_male.sh
+$ ./run_stage6_WER_tgsmall_female.sh
+
+####################
+
+In stage 5 and 6, you can also rescore using the rnnlm model, whose shell scripts are
+contained in the folder egs/librispeech_binh/s5/decode_and_score_rnnlm
+
+Rescoring rnnlm is run after you have finished decoding using the small trigram model
+
+However, rescoring by rnnlm results in an error, which has not been resolved yet, 
+probably due to data file incompatibility or memory issues
+

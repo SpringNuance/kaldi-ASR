@@ -1,0 +1,16 @@
+First of all, we must be sure that all shell scripts are in UNIX format and have
+executable permission. To do this, we can run the shell script, which scans
+all the shell scripts in this project and convert them to UNIX format and give
+them executable permission.
+
+$ ./enable_shell.sh
+
+All of the installlation commands are put in the install.sh script
+However, I suggest that you should not run ./install.sh directly, 
+but instead, you should run the commands in the install.sh one by one, 
+so that you can see the output of each command and know what is going on.
+
+Additionally, some of the commands in the install.sh script can be very long,
+such as installing gpp 4.8 and make -j 4, which essentially compiles the Kaldi
+project from their dependencies
+
